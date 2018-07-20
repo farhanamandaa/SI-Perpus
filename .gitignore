@@ -11,6 +11,8 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .env
+
+0546ea7d02eb739cdd694bd865e0bc99cb890ed9
 vendor/
 node_modules/
 npm-debug.log
@@ -31,3 +33,4 @@ Homestead.json
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/8bb53e3b34a67749d044e4e5bf53f6215f860625
+.rocketeer/0546ea7d02eb739cdd694bd865e0bc99cb890ed9

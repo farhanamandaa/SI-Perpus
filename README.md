@@ -5,6 +5,7 @@
 PHP >= 7.1.3
 Composer
 MYSQL
+Node v.8.11.1
 ```
 
 ### Instalation
@@ -15,4 +16,5 @@ MYSQL
 * create new .env file and setting
 * run php artisan migrate
 * run php artisan db:seed --class=RoleSeeder
+* run npm run dev
 * run php artisan serve

@@ -157,7 +157,6 @@
                           <th>Tahun Terbit</th>
                           <th>Jumlah Halaman</th>
                           <th>Stok</th>
-                          <th>Gambar Buku</th>
                           <th>Kategori Buku</th>
                         </tr>
                       </thead>
@@ -171,8 +170,7 @@
                             <td> {{$book->year}} </td>
                             <td> {{$book->pages}} </td>
                             <td> {{$book->quantity}} </td>
-                            <td> Pending </td>
-                            <td> {{$book->category->category}} </td>
+                            <td> {{$book->category}} </td>
                           </tr>
                         @endforeach
                       </tbody>

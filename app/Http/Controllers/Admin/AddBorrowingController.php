@@ -21,6 +21,7 @@ class AddBorrowingController extends Controller
     public function index()
     {
         $borrows =   Borrow::all();
+        // die($borrows);
         // foreach ($borrows as $borrow) {
         //     return $borrow->user;
         // }

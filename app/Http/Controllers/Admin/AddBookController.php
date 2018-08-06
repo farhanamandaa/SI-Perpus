@@ -7,6 +7,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 
 class AddBookController extends Controller
 {
@@ -18,7 +19,7 @@ class AddBookController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $books      = Book::all();
+        $books      = DB::table('overall_quantity')->get();
         return view('admin.addbook', compact(['categories','books']));
     }
 

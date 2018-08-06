@@ -15,7 +15,7 @@ class CreateOverallQuantityView extends Migration
     {
         DB::unprepared('
         CREATE VIEW overall_quantity AS 
-        SELECT t.title, t.author, t.publisher, t.year, t.pages, t.quantity - COALESCE(v.qty, 0) quantity, c.category from books t left join stock_quantity v on t.title = v.title left join categories c on t.category_id = c.id
+        SELECT t.id, t.title, t.author, t.publisher, t.year, t.pages, t.quantity - COALESCE(v.qty, 0) quantity, c.category from books t left join stock_quantity v on t.title = v.title left join categories c on t.category_id = c.id
         ');
     }
 

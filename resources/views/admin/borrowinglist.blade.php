@@ -55,12 +55,13 @@
                   </div>
                   <div class="x_content">
 
-                    <table class="table">
+                    <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
                           <th>#</th>
                           <th>Peminjam</th>
                           <th>Buku</th>
+                          <th>Jumlah Buku</th>
                           <th>Tnggal Pinjam</th>
                           <th>Tanggal Kembali</th>
                           <th>Aksi</th>
@@ -80,6 +81,7 @@
                               {{$book->title}}
                             @endforeach
                           </td>
+                          <td>{{$borrow->quantity}}</td>
                           <td>{{ Carbon\Carbon::parse($borrow->borrow_date)->formatLocalized('%d %B %Y')}}</td>
                           <td>{{$borrow->return_date}}</td>
                           <td>

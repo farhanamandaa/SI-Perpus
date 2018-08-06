@@ -59,12 +59,30 @@ class AddBorrowingController extends Controller
             'borrow_date'   =>   'required',
             'return_date'   =>   'required',   
         ]);
+        $quantity = DB::table('overall_quantity')
+                    ->select('quantity')
+                    ->where('id', $validatedData['book_id'])
+                    ->first();
 
-        $borrowing          =   Borrow::create(request(['quantity','borrow_date','return_date']));
-        $borrow             =   Borrow::latest()->first();
-        $borrow->book()->attach($book_id, ['user_id' => $user_id]);
+        foreach ($quantity as $qty) 
+        {
+            $q = $qty;
+        }
+        $qs = $q - $validatedData['quantity'];
+        if ($qs < 0) 
+        {
+            session()->flash('message','Peminjaman Gagal, stok tidak mencukupi');
+            return redirect('admin/borrowing_list');
+        }
+        else
+        {
+            $borrowing          =   Borrow::create(request(['quantity','borrow_date','return_date']));
+            $borrow             =   Borrow::latest()->first();
+            $borrow->book()->attach($book_id, ['user_id' => $user_id]);
 
-        return redirect('admin/borrowing_list');
+            session()->flash('message','Peminjaman berhasil.');
+            return redirect('admin/borrowing_list');
+        }
     }
 
     /**
@@ -149,10 +167,44 @@ class AddBorrowingController extends Controller
                         ->select('name','title','return_date','fine')
                         ->leftJoin('users','book_borrow.user_id','=','users.id')
                         ->leftJoin('books','book_borrow.book_id','=','books.id')
-                        ->leftJoin('returning','book_borrow.borrow_id','=','returning.borrow_id')
+                        ->rightJoin('returning','book_borrow.borrow_id','=','returning.borrow_id')
                         ->get();
         // return $return_list;                
         return view('admin.returninglist', compact('return_list')); 
     }
 
+    public function searchName(Request $request)
+    {
+        if ($request->has('q')) 
+        {
+            $name           =   $request->q;
+            $searchQuery    =   DB::table('users')
+                                ->select('id','name')
+                                ->where('role_id', '2')
+                                ->where('name', 'LIKE', $name.'%')
+                                ->get();
+            $searchResult  =   $searchQuery->map(function ($data) {
+                return [
+                    'id'    =>  $data->id,
+                    'text'  =>  $data->name
+                ]; 
+            });
+
+            // dd($fixed);
+            return response()->json($searchResult);
+        }
+    }
+
+    public function searchBook (Request $request)
+    {
+        if ($request->has('q')) 
+        {
+            $title  =   $request->q;
+            $data   =   DB::table('books')
+                        ->select('id','title')
+                        ->where('title', 'LIKE', $title.'%')
+                        ->get();
+            return response()->json($data);
+        }
+    }
 }

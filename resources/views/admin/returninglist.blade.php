@@ -55,7 +55,7 @@
                   </div>
                   <div class="x_content">
 
-                    <table class="table">
+                    <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
                           <th>#</th>
@@ -63,7 +63,6 @@
                           <th>Buku</th>
                           <th>Tnggal Kembali</th>
                           <th>Denda</th>
-                          <th>Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -78,9 +77,6 @@
                           </td>
                           <td>{{ Carbon\Carbon::parse($returned->return_date)->formatLocalized('%d %B %Y')}}</td>
                           <td>{{$returned->fine}}</td>
-                          <td>
-                           {{--  <a href="end/{{$borrow->id}}"><button type="button" class="btn btn-default  ">Selesai</button></a> --}}
-                          </td>
                         </tr>
                         @endforeach
                       </tbody>

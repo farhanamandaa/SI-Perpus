@@ -18,6 +18,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/search', 'Admin\AddBorrowingController@searchName')->name('search');
+Route::get('/search_book', 'Admin\AddBorrowingController@searchBook')->name('search_book');
+
 Route::group(['prefix' => 'user'], function(){
 	Route::get('/home', 'HomeController@index')->name('user.home');
 	Route::get('/books', 'HomeController@show')->name('user.list.book');

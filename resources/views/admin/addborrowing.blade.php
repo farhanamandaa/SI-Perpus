@@ -53,9 +53,6 @@
                         <label for="status" class="control-label col-md-3 col-sm-3 col-xs-12">Peminjam<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="form-control" id="user_id" name="user_id">
-                            @foreach ($members as $member)
-                              <option value = {{$member->id}} > {{ $member->name }} </option>
-                            @endforeach
                           </select>
                         </div>
                       </div>
@@ -64,9 +61,6 @@
                         <label for="status" class="control-label col-md-3 col-sm-3 col-xs-12">Buku<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="form-control" id="book_id" name="book_id">
-                            @foreach ($books as $book)
-                              <option value = {{$book->id}} > {{ $book->title }} </option>
-                            @endforeach
                           </select>
                         </div>
                       </div>
@@ -128,6 +122,42 @@
       $('input[id="date"]') .datetimepicker({
         format: 'Y-MM-DD HH:mm:ss'
       });
+
+      $('#user_id').select2({
+        placeholder : 'Cari User..',
+        ajax: {
+          url: '/search',
+          dataType: 'json',
+          delay: 250,
+        processResults: function (data) {
+          return {
+            results: data
+        };
+      },
+      cache: true
+        }
+      });
+
+      $('#book_id').select2({
+        placeholder : 'Cari Buku..',
+        ajax: {
+          url: '/search_book',
+          dataType: 'json',
+          delay: 250,
+        processResults: function (data) {
+          return {
+            results:  $.map(data, function (item) {
+              return {
+              id: item.id,  
+              text: item.title
+            }
+          })
+        };
+      },
+      cache: true
+        }
+      });
+
     });
   </script>
 
